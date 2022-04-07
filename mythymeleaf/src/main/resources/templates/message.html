@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Thymeleaf - Message</title>
+</head>
+<body>
+	<div>ABC</div>
+	<div th:text="我是Thymeleaf" >ABC</div>
+	<div th:text="'我是 Thymeleaf(有空格)'" >A B C</div>
+	本地變數：
+	<div th:with="bmi=(60/((170/100) * (170/100)))">
+		<div th:text="${bmi}">0.00</div>
+	</div>
+	<img th:src="@{/images/person.png}" width="200" src="https://spring.io/images/logo-spring-tools-4-c5e3ea301ba9d85444ef244449335be3.svg" /><p />
+	取得 Model 變數：
+	<div th:text="${ username }">username</div>
+	<div th:text="${ nickname }">nickname</div>
+	<div th:utext="${ nickname }">nickname</div>
+	<div th:text="${ scores }">scores</div>
+	資料筆數：
+	<div th:text="${ #lists.size(scores) }">0</div>
+	內聯：
+	分數：[[${ scores }]]<p />
+	<script>
+		var scores = [[${ scores }]];
+		console.log(scores);
+		console.log(scores.length);
+		console.log(scores[1]);
+	</script>
+	表格：
+	<table border="1" width="50%">
+		<tr th:each="score, scorestat : ${ scores }">
+			<td th:text="${ scorestat.index + 1 }">0</td>
+			<td th:text="${ score }">0</td>
+			<td th:text="(${ score>=60 })?'V':''">V</td>
+			<td th:if="${ score>=60 }">Pass</td>
+			<td th:unless="${ score>=60 }">Fail</td>
+			<td th:switch="${ score>=60 }">
+				<span th:case="true">及格</span>
+				<span th:case="*">不及格</span>
+			</td>
+		</tr>
+	</table>
+	Users
+	<table border="1" width="50%">
+		<tr>
+			<th>Name</th><th>Age</th>
+		</tr>
+		<tr th:each="entry : ${users}">
+			<td th:each="x : ${entry}">
+				[[${x.value}]]
+			</td>
+		</tr>
+	</table>
+	Users
+	<table border="1" width="50%">
+		<tr>
+			<th>Name</th><th>Age</th>
+		</tr>
+		<tr th:each="entry : ${users}">
+			<td th:text="${entry.name}"></td>
+			<td th:text="${entry.age}"></td>
+		</tr>
+	</table>
+</body>
+</html>
